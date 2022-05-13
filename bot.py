@@ -13,13 +13,14 @@ def example_command(message, cmd):
 
 @app.route('(?!/).+')
 def parrot(message):
-   chat_dest = message['chat']['id']
-   user_msg = message['text']
+    chat_dest = message['chat']['id']
+    user_msg = message['text']
 
-   msg = "Parrot Says: {}".format(user_msg)
-   app.send_message(chat_dest, msg)
+    msg = "Parrot Says: {}".format(user_msg)
+    app.send_message(chat_dest, msg)
 
 
 if __name__ == '__main__':
-    app.config['api_key'] = '5266078812:AAHyfXV6usfzkeFQkBzrrg4JgirPZ3TeKQo'
+    with open('api_key.txt', 'r') as f:
+        app.config['api_key'] = f.readline()
     app.poll(debug=True)
