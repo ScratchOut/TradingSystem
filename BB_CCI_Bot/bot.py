@@ -10,6 +10,7 @@ from ta.trend import CCIIndicator
 
 #pd.set_option('display.max_rows', None)
 
+
 Band0 = 100
 Band1 = -100
 in_possition = False
@@ -22,6 +23,8 @@ exchange = ccxt.binance({
 
 
 def bb_cci_indicator(df):
+    """Функция для подсчета значений индикаторов BB и CCI, а также внесения этих значений в dataframe"""
+
     buy_signal = False
     # BB_indicator
     bb_ind = BollingerBands(df['close'], 46, 3)
@@ -54,6 +57,8 @@ def bb_cci_indicator(df):
 
 
 def check_buy_sell_signals(df):
+    """Данная функция осуществляет проверку значений индикаторов и если они достигают определенных значений то функция отправляет сигнал"""
+
     print("Checking for buy and sell")
     print(df.tail(5))
     global in_possition
@@ -74,6 +79,9 @@ def check_buy_sell_signals(df):
 
 
 def run_bot():
+    """Функция выводит последние n значений dataframe и наличие сигнала о покупке или продаже. 
+    Данная функция вызывается каждые n секунд с помощью модуля schedule"""
+
     print(f"Fetching new bars for {datetime.now().isoformat()}")
     bars = exchange.fetch_ohlcv('ETH/USDT', limit=100, timeframe='5m')
     df = pd.DataFrame(bars[:-1], columns=['timestamp',
